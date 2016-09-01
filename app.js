@@ -8,7 +8,7 @@ var hbs = require('express-handlebars');
 
 var routes = require('./routes/index');
 var mongoRoutes= require('./routes/index');
-var cool = require('cool-ascii-faces');
+//var cool = require('cool-ascii-faces');
 
 var app = express();
 
@@ -28,9 +28,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bookmark', routes);
 app.use('/mongoRoutes', mongoRoutes);
 
-app.get('/cool', function(request, response) {
+/*app.get('/cool', function(request, response) {
   response.send(cool());
-});
+});*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
