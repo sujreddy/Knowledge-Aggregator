@@ -16,20 +16,27 @@
     "serve-favicon": "~2.3.0"
   },
   "engine": {
-	"node": "4.4.7"
+    "node": "4.4.7"
   },
   "repository": {
-	"type": "git",
-	"url": "https://github.com/sujreddy/Knowledge-Aggregator"
+    "type": "git",
+    "url": "git+https://github.com/sujreddy/Knowledge-Aggregator.git"
   },
-  "keywords":[
-  "node",
-  "heroku",
-  "express"
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
   ],
   "description": "bookmark",
   "main": "www.js",
   "devDependencies": {},
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sujreddy/Knowledge-Aggregator/issues"
+  },
+  "homepage": "https://github.com/sujreddy/Knowledge-Aggregator#readme",
+  "bin": {
+    "bookmark": "mongo.js"
+  }
 }
