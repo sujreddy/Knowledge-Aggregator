@@ -2,8 +2,10 @@ var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');//import mondodb
 var assert =require('assert');//to check values
+var config = require('./config');
 
-var url='mongodb://localhost:27017/local';
+var url='mongodb://' + config.mongo.host  + ':' + config.mongo.port + '/local';
+
 console.log('connceted to mongo');
 
 router.post('/submit', function(req, res, next) {

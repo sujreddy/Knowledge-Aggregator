@@ -5,8 +5,11 @@
  */
 
 var app = require('./app');
+var config = require('./config');
 var debug = require('debug');
-var http = require('http')
+var http = require('http');
+var config = require('./config');
+
 /*var https = require('https');
 var fs = require('fs');
 
@@ -19,7 +22,8 @@ var options= {
  * Get port from environment and store in Express.
  */
 
-var port = process.env.PORT || '3411';
+var port = config.web.port;
+
 app.set('port', port);
 
 /**
