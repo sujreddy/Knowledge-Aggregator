@@ -1,9 +1,10 @@
 var mongo = require('mongodb');//import mondodb
 var assert =require('assert');//to check values 
 var indexfile = require('./index');
+var config = require('../config');
 
 /* Url to connect mongodb which consists of local host with port number and database name */
-var url='mongodb://localhost:27017/local';
+var url='mongodb://' + config.mongo.host  + ':' + config.mongo.port + '/local';
 
 /* Object which contains all the methods to post data to mongo and fetch from Mongo */
 var mongoObj = {
