@@ -24,7 +24,7 @@ var encrptAndDecrypt = {
 	}
 }
 
-module.exports= encrptAndDecrypt;
+module.exports = encrptAndDecrypt;
 
 
 
