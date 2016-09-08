@@ -2,10 +2,17 @@ var mongo = require('mongodb');//import mondodb
 var assert =require('assert');//to check values 
 var indexfile = require('./index');
 var config = require('../config');
+//var encryAndDecry = require('../EncryptAndDecrypt');
+
+var encryptAndDecrypt = require('../EncryptAndDecrypt');
+var password = encryptAndDecrypt.decrypt(config.mongo.password);
+console.log('Encrypted  password is '+password);
+
+
 
 /* Url to connect mongodb which consists of local host with port number and database name */
 var url='mongodb://' + config.mongo.host  + ':' + config.mongo.port + '/local';
-
+//var url='mongodb://'+config.mongo.username+':'+password+'@'+config.mongo.dsportmlab+':'+config.mongo.port+'/knowledgeaggregator';
 /* Object which contains all the methods to post data to mongo and fetch from Mongo */
 var mongoObj = {
 
@@ -41,7 +48,8 @@ var mongoObj = {
 		//var insensitivetitle =  '\/'+title + '\/i' ;
 		var collection= db.collection('bookmark');
 		//.find({Title:{$regex: {title}}/i, "privacyType":privacyType}).sort(sort).limit(10);
-		var cursor=collection.find({Title: { $regex: title, $options: "i" }, Username:username, privcyType:privacyType}).sort(sort).limit(10);
+		//var cursor=collection.find({Title: { $regex: title, $options: "i" }, Username:username, privcyType:privacyType}).sort(sort).limit(10);
+		var cursor=collection.find({Title: { $regex: title, $options: "i" }, privacyType: privacyType, Username: username, Company: company }).sort(sort).limit(10);//.sort(sort).limit(10);//{Title: { $regex: title, $options: "i" }, privacyType: privacyType, Username: username, Company: company }.sort(sort).limit(10);
 		console.log('statistics '+ cursor.explain("executionStats").executionStats);
 		console.log('#Pointing to bookmark collection '+cursor);
 
