@@ -11,8 +11,8 @@ console.log('Encrypted  password is '+password);
 
 
 /* Url to connect mongodb which consists of local host with port number and database name */
-var url='mongodb://' + config.mongo.host  + ':' + config.mongo.port + '/local';
-//var url='mongodb://'+config.mongo.username+':'+password+'@'+config.mongo.dsportmlab+':'+config.mongo.port+'/knowledgeaggregator';
+//var url='mongodb://' + config.mongo.host  + ':' + config.mongo.port + '/local';
+var url='mongodb://'+config.mongo.username+':'+password+'@'+config.mongo.dsportmlab+':'+config.mongo.port+'/knowledgeaggregator';
 /* Object which contains all the methods to post data to mongo and fetch from Mongo */
 var mongoObj = {
 
