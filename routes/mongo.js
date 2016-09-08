@@ -6,9 +6,7 @@ var config = require('../config');
 
 var encryptAndDecrypt = require('../EncryptAndDecrypt');
 var password = encryptAndDecrypt.decrypt(config.mongo.password);
-console.log('Encrypted  password is '+password);
-
-
+//console.log('Encrypted  password is '+password);
 
 /* Url to connect mongodb which consists of local host with port number and database name */
 //var url='mongodb://' + config.mongo.host  + ':' + config.mongo.port + '/local';
@@ -22,6 +20,8 @@ var mongoObj = {
 	postToMongo : function(item){
 		//console.log(item);
 	  var insertedToMongo=[];	
+	  var Encrypted=[];
+
 	  mongo.connect(url, function(err, db){
 	  	assert.equal(null, err);
 	  	var collectionName=db.collection('bookmark');
@@ -37,23 +37,18 @@ var mongoObj = {
 	},
 
 	fetchFromMongoDB : function(title, privacyType, username, company){
-
-		console.log('Request sending to mongodb ' +title+' '+privacyType);
+		
 		var resultArrayFromMongo=[];
 		var sort = {'createdDate': -1};
-		//var titleVa=/{title}/i;
-		//var titleval=titleVa.replace("{","");
-		//console.log('titleVal '+titleVal);	
-		//console.log('titleVal '+titleVal);
+		
 		mongo.connect(url, function(err, db){
 		assert.equal(null, err);
 		console.log('successfully connected with mongodb');
-		//var insensitivetitle =  '\/'+title + '\/i' ;
+		
 		var collection= db.collection('bookmark');
-		//.find({Title:{$regex: {title}}/i, "privacyType":privacyType}).sort(sort).limit(10);
-		//var cursor=collection.find({Title: { $regex: title, $options: "i" }, Username:username, privcyType:privacyType}).sort(sort).limit(10);
+		
 		var cursor=collection.find({Title: { $regex: title, $options: "i" }, privacyType: privacyType, Username: username, Company: company }).sort(sort).limit(10);//.sort(sort).limit(10);//{Title: { $regex: title, $options: "i" }, privacyType: privacyType, Username: username, Company: company }.sort(sort).limit(10);
-		console.log('statistics '+ cursor.explain("executionStats").executionStats);
+		console.log('statistics ');//+ cursor.explain("executionStats").executionStats +'size is '
 		console.log('#Pointing to bookmark collection '+cursor);
 
 		cursor.forEach(function(doc, err){
