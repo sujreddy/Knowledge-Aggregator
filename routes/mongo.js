@@ -38,7 +38,7 @@ var mongoObj = {
 
 		console.log('Request sending to mongodb ' +title+' '+privacyType);
 		var resultArrayFromMongo=[];
-		var sort = {'_id': -1}
+		var sort = {'createdDate': -1};
 		//var titleVa=/{title}/i;
 		//var titleval=titleVa.replace("{","");
 		//console.log('titleVal '+titleVal);	
