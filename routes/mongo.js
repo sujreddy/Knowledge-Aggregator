@@ -8,6 +8,8 @@ var encryptAndDecrypt = require('../EncryptAndDecrypt');
 var password = encryptAndDecrypt.decrypt(config.mongo.password);
 //console.log('Encrypted  password is '+password);
 
+
+
 /* Url to connect mongodb which consists of local host with port number and database name */
 //var url='mongodb://' + config.mongo.host  + ':' + config.mongo.port + '/local';
 //var url = 'mongodb://bookmarkuser:bookmark@ds019816.mlab.com:19816/knowledgeaggregator';
@@ -38,6 +40,7 @@ var mongoObj = {
 
 	fetchFromMongoDB : function(title, privacyType, username, company){
 		
+		//console.log('Request sending to mongodb ' +title+' '+privacyType);
 		var resultArrayFromMongo=[];
 		var sort = {'createdDate': -1};
 		
@@ -54,6 +57,12 @@ var mongoObj = {
 		cursor.forEach(function(doc, err){
 			assert.equal(null, err);
 			if(doc != null){
+				/*console.log('##document '+doc.length);
+				for(i=0; i<doc.length; i++){
+					var urlDecryption = encryptAndDecrypt.decrypt(doc[i].URL);
+					doc[i].URL = urlDecryption;
+					console.log('##URL '+doc[i].URL);	
+				}*/
 			resultArrayFromMongo.push(doc);
 		}else{
 			resultArrayFromMongo.push('No results found');
@@ -61,11 +70,19 @@ var mongoObj = {
 		}, function(){
 			db.close();
 
-			console.log('data from mongodb'+JSON.stringify(resultArrayFromMongo));
+			console.log('data from mongodb before urlDecryption '+JSON.stringify(resultArrayFromMongo));
+			for(i=0; i<resultArrayFromMongo.length;  i++){
+				console.log('resultArrayFromMongo### '+JSON.stringify(resultArrayFromMongo[i].URL));
+				var urlDecryption = encryptAndDecrypt.decrypt(resultArrayFromMongo[i].URL);
+				resultArrayFromMongo[i].URL = urlDecryption;
+				console.log('##URL '+resultArrayFromMongo[i].URL);
+			}
+			console.log('data from mongodb after urlDecryption '+JSON.stringify(resultArrayFromMongo));
 			console.log('##database has colsed');			
+			return resultArrayFromMongo; 
 		});
 	});
-		return resultArrayFromMongo; 
+		//return resultArrayFromMongo; 
 	}
 }
 

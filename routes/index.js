@@ -5,6 +5,7 @@ var mongofile = require('./mongo');
 var assert = require('assert');
 var url = require('url');
 
+var encryptAndDecrypt = require('../EncryptAndDecrypt');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: ' Knowledge Aggregator', condition: true });
@@ -13,13 +14,16 @@ router.get('/', function(req, res, next) {
 /* Here is the post method to post data to web-server */
 router.post('/submit', function(req, res) {
   
+  var encrptedbody={};
   console.log(req.body);
   var newbody = {};
   newBody = req.body;
+  encrptedbody = encryptAndDecrypt.encrypt(req.body.URL);
+  req.body.URL = encrptedbody;
   try {
   	
   	var fromMongo=[];
-  	fromMongo=mongofile.postToMongo(newBody);
+  	fromMongo=mongofile.postToMongo(req.body);
   	console.log('###After submition '+fromMongo);
   	res.json(newbody);
 
@@ -45,8 +49,8 @@ router.get('/get-data/', function(req, res){
 	
 	
 	try{
-		var datafromOngo =  mongofile.fetchFromMongoDB(urlString.Title, urlString.privacyType, urlString.Username, urlString.Company);//urlString.Title, urlString.privacyType, urlString.Username, urlString.Company
-		
+		datafromOngo =  mongofile.fetchFromMongoDB(urlString.Title, urlString.privacyType, urlString.Username, urlString.Company);//urlString.Title, urlString.privacyType, urlString.Username, urlString.Company
+		console.log('datafromOngo in index file '+JSON.stringify(datafromOngo));
 		}	
 		catch(e){
 			console.log(e);
