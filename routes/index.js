@@ -5,32 +5,25 @@ var mongofile = require('./mongo');
 var assert = require('assert');
 var url = require('url');
 
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  req.session.error = 'Please sign in!';
-  res.redirect('/login');
-}
-
+var encryptAndDecrypt = require('../EncryptAndDecrypt');
 /* GET home page. */
-router.get('/', ensureAuthenticated,function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('index', { title: ' Knowledge Aggregator', condition: true });
 });
 
 /* Here is the post method to post data to web-server */
-router.post('/submit', ensureAuthenticated, function(req, res) {
+router.post('/submit', function(req, res) {
   
-
-  //var bookmarkCreationTime= new Date();
-  //req.createdDate=bookmarkCreationTime;
-  //req.body=req.createdDate;
+  var encrptedbody={};
   console.log(req.body);
   var newbody = {};
   newBody = req.body;
+  encrptedbody = encryptAndDecrypt.encrypt(req.body.URL);
+  req.body.URL = encrptedbody;
   try {
-  	//console.log(newBody);
+  	
   	var fromMongo=[];
-  	fromMongo=mongofile.postToMongo(newBody);
+  	fromMongo=mongofile.postToMongo(req.body);
   	console.log('###After submition '+fromMongo);
   	res.json(newbody);
 
@@ -42,36 +35,27 @@ router.post('/submit', ensureAuthenticated, function(req, res) {
 
 /* Here is the methood to fetch data from MongoDB */
 
-router.get('/get-data/',ensureAuthenticated, function(req, res){
+router.get('/get-data/', function(req, res){
 	var url_parts = url.parse(req.url, true);
 
 	var urlString=url_parts.query;
 	console.log('urlString '+urlString.Title +urlString.privacyType);
 	var urlTitle="/"+urlString.Title+"/i";
 	console.log('urlTitle '+urlTitle);
-	/*var stringifyval=JSON.stringify(urlString);
-	console.log('JSON Format '+stringifyval);
-	var resul = urlString.replace("+","");
-	console.log('resul '+resul);
-	var remov=resul.split("&");
 	
-	var jsonfor=JSON.stringify(remov[0]);
-	
-	var jsonparse=jsonfor.replace('=','":"');
-	console.log('JSON Parse '+jsonparse);*/
 	var datafromOngo=[];
 	var newbody={};
 	newbody=req.body;
-	//console.log('newbody '+newbody.params.Title);
+	
 	
 	try{
-	var datafromOngo =  mongofile.fetchFromMongoDB(urlString.Title, urlString.privacyType);
-	//console.log('Data from Mongo '+JSON.stringify(datafromOngo));	
-	}	
-	catch(e){
-		console.log(e);
-	}
-	res.render('index', {items: datafromOngo});
+		datafromOngo =  mongofile.fetchFromMongoDB(urlString.Title, urlString.privacyType, urlString.Username, urlString.Company);//urlString.Title, urlString.privacyType, urlString.Username, urlString.Company
+		console.log('datafromOngo in index file '+JSON.stringify(datafromOngo));
+		}	
+		catch(e){
+			console.log(e);
+		}
+		res.render('index', {items: datafromOngo});
 });
 
 

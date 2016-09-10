@@ -48,7 +48,9 @@
 						<div>Title: {{ this.Title }}</div>
 						<div>URL: {{ this.URL }}</div>
 						<div>Searchtag: {{ this.Searchtag }}</div>
-						<div>privacyType: {{ this.privacyType }}</div><br/>
+						<div>privacyType: {{ this.privacyType }}</div>
+						<div>Username: {{ this.Username }}</div>
+						<div>Company: {{ this.Company }}</div><br/>
 					</article>
 				{{/each}}
 			</div></td>
@@ -80,6 +82,6 @@
 
     var d = new Date();
     
-    var timee=document.getElementById("createdDate").innerHTML = d;
-    alert(timee);
+    var timee=document.getElementById("createdDate").value = d;
+    //alert(timee);
 </script>

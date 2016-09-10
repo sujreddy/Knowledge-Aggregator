@@ -1,0 +1,1 @@
+NSString imageStr = [GTMBase64 stringByEncodingData: 'imageData'];

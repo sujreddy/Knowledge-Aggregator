@@ -5,6 +5,6 @@ config.web = {};
 
 config.mongo.host = 'localhost';
 config.mongo.port = 27017;
-config.web.port = process.env.WEB_PORT || 9980;
+config.web.port = process.env.PORT || 3000;
 
 module.exports = config;
