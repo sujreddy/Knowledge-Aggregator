@@ -5,13 +5,20 @@ var mongofile = require('./mongo');
 var assert = require('assert');
 var url = require('url');
 
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  req.session.error = 'Please sign in!';
+  res.redirect('/login');
+}
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', ensureAuthenticated,function(req, res, next) {
   res.render('index', { title: ' Knowledge Aggregator', condition: true });
 });
 
 /* Here is the post method to post data to web-server */
-router.post('/submit', function(req, res) {
+router.post('/submit', ensureAuthenticated, function(req, res) {
   
 
   //var bookmarkCreationTime= new Date();
@@ -35,7 +42,7 @@ router.post('/submit', function(req, res) {
 
 /* Here is the methood to fetch data from MongoDB */
 
-router.get('/get-data/', function(req, res){
+router.get('/get-data/',ensureAuthenticated, function(req, res){
 	var url_parts = url.parse(req.url, true);
 
 	var urlString=url_parts.query;
