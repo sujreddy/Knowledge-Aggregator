@@ -11,39 +11,25 @@ var routes = require('./routes/index');
 var session = require('express-session');
 var mongoRoutes= require('./routes/index');
 var ForceDotComStrategy = require('passport-forcedotcom').Strategy;
-//var cool = require('cool-ascii-faces');
 
-//----------------------------------------------------------------------------
-// REPLACE THE BELOW SETTING TO MATCH YOUR SALESFORCE CONNECTED-APP'S SETTINGS
-//----------------------------------------------------------------------------
 
 // Set Force.com app's clientID
-var CF_CLIENT_ID = '3MVG9A2kN3Bn17hsWsLDatw._IRRcBapWFgecAzRUqAny5.wuHmAMejzvV7ZhFlTg5ZPNdHBDjS18Zu0cvgeN';
+var CF_CLIENT_ID = config.salesforce.clientId;
 
 // Set Force.com app's clientSecret
-var CF_CLIENT_SECRET = '3585278186716093184';
+var CF_CLIENT_SECRET = config.salesforce.clientsecret;
 
-// Note: You should have a app.get(..) for this callback to receive callback
-// from Force.com
-//
-// For example, if your callback url is:
-//
-//   https://localhost:3000/auth/forcedotcom/callback
-// 
-// then, you should have a HTTP GET endpoint like:
-//
-//   app.get('/auth/forcedotcom/callback, callback))
-//
-var CF_CALLBACK_URL = 'http://localhost:' + config.web.port + '/auth/forcedotcom/callback';
+
+var CF_CALLBACK_URL = config.salesforce.callbackurl;
 
 
 // Salesforce Authorization URL (this defaults to:
 // https://login.salesforce.com/services/oauth2/authorize)
-var SF_AUTHORIZE_URL = 'https://login.salesforce.com/services/oauth2/authorize';
+var SF_AUTHORIZE_URL = config.salesforce.authorizeurl;
 
 // Salesforce token URL (this defaults to:
 // https://login.salesforce.com/services/oauth2/token)
-var SF_TOKEN_URL = 'https://login.salesforce.com/services/oauth2/token';
+var SF_TOKEN_URL = config.salesforce.tokenurl;
 
 //----------------------------------------------------------------------------
 

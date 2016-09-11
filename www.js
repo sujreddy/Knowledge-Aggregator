@@ -8,7 +8,6 @@ var app = require('./app');
 var config = require('./config');
 var debug = require('debug');
 var http = require('http');
-var config = require('./config');
 
 /*var https = require('https');
 var fs = require('fs');

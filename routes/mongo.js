@@ -3,8 +3,8 @@ var assert =require('assert');//to check values
 var indexfile = require('./index');
 var config = require('../config');
 
-
 var encryptAndDecrypt = require('../EncryptAndDecrypt');
+
 var password = encryptAndDecrypt.decrypt(config.mongo.password);
 //console.log('Encrypted  password is '+password);
 
@@ -13,12 +13,11 @@ var password = encryptAndDecrypt.decrypt(config.mongo.password);
 //var url = 'mongodb://bookmarkuser:bookmark@ds019816.mlab.com:19816/knowledgeaggregator';
 var url = 'mongodb://' + config.mongo.username + ':' + password + '@' + config.mongo.dsportmlab + ':' + config.mongo.port + '/knowledgeaggregator';
 
+var mongoObj  = {};
 
 /* Object which contains all the methods to post data to mongo and fetch from Mongo */
-var mongoObj = {
-
-	postToMongo : function(item){
-		//console.log(item);
+ mongoObj.storebookmark =  function(item){
+		console.log(item);
 	  var insertedToMongo=[];	
 	  var Encrypted=[];
 
@@ -34,9 +33,9 @@ var mongoObj = {
 	  	});
 	  })	
 	  return insertedToMongo;
-	},
+	}
 
-	fetchFromMongoDB : function(title, privacyType, username, company){
+ mongoObj.getbookmarks = function(title, privacyType, username, company){
 		
 		//console.log('Request sending to mongodb ' +title+' '+privacyType);
 		var resultArrayFromMongo=[];
@@ -76,7 +75,6 @@ var mongoObj = {
 	});
 		//return resultArrayFromMongo; 
 	}
-}
 
 
 module.exports = mongoObj;

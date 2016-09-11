@@ -1,9 +1,12 @@
+var config = require('./config');
 
-var encrptAndDecrypt = {
+var encrptAndDecrypt = 
+{
 
-	encrypt : function(text){
+	encrypt : function(text)
+	{
 	  	const crypto = require('crypto');
-		const cipher = crypto.createCipher('aes192', 'a password');
+		const cipher = crypto.createCipher('aes192', config.web.key);
 
 		var encrypted = cipher.update(text, 'utf8', 'hex');
 		encrypted += cipher.final('hex');
@@ -11,9 +14,10 @@ var encrptAndDecrypt = {
 
 		return encrypted;
 	},
-	decrypt : function(text){
+	decrypt : function(text)
+	{
 		const crypto = require('crypto');
-		const decipher = crypto.createDecipher('aes192', 'a password');
+		const decipher = crypto.createDecipher('aes192', config.web.key);
 
 		//var encrypted = '7643356f67a4a151206bb30aa04d47b9';
 		var decrypted = decipher.update(text, 'hex', 'utf8');
