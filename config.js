@@ -19,7 +19,7 @@ config.dynamo.password = '7643356f67a4a151206bb30aa04d47b9';
 config.dynamo.username = 'bookmarkuser';
 config.dynamo.dsportmlab = 'ds019816.mlab.com';*/
 
-config.web.port = process.env.PORT || 3411;
+config.web.port = process.env.PORT || 3000;
 config.web.key = 'a password';
 
 config.salesforce.clientId = '3MVG9A2kN3Bn17hsWsLDatw._IRRcBapWFgecAzRUqAny5.wuHmAMejzvV7ZhFlTg5ZPNdHBDjS18Zu0cvgeN';
